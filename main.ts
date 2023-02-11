@@ -1,3 +1,7 @@
+control.onEvent(EventBusSource.MES_DEVICE_INFO_ID, EventBusValue.MICROBIT_EVT_ANY, function () {
+    basic.showIcon(IconNames.Giraffe)
+    wuKong.mecanumStop()
+})
 bluetooth.onBluetoothConnected(function () {
     basic.showIcon(IconNames.Pitchfork)
 })
@@ -6,9 +10,6 @@ bluetooth.onBluetoothDisconnected(function () {
 })
 input.onButtonPressed(Button.A, function () {
     wuKong.mecanumRun(wuKong.RunList.Front, 49)
-})
-input.onButtonPressed(Button.AB, function () {
-    wuKong.mecanumRun(wuKong.RunList.stop, 49)
 })
 input.onButtonPressed(Button.B, function () {
     wuKong.mecanumRun(wuKong.RunList.rear, 49)
@@ -22,7 +23,7 @@ control.onEvent(EventBusSource.MES_DPAD_CONTROLLER_ID, EventBusValue.MICROBIT_EV
     } else if (control.eventValue() == 13) {
         wuKong.mecanumRun(wuKong.RunList.rear, 49)
     } else if (control.eventValue() == 11) {
-        wuKong.mecanumRun(wuKong.RunList.rear, 49)
+        wuKong.mecanumRun(wuKong.RunList.left, 49)
     } else if (control.eventValue() == 15) {
         wuKong.mecanumRun(wuKong.RunList.right, 49)
     } else if (control.eventValue() == 1) {
@@ -46,7 +47,7 @@ wuKong.ServoList.S3,
 wuKong.ServoList.S0,
 wuKong.ServoList.S1
 )
-wuKong.mecanumRun(wuKong.RunList.stop, 49)
+wuKong.mecanumStop()
 basic.showIcon(IconNames.Heart)
 basic.forever(function () {
     obstacle_disc = sonar.ping(
@@ -54,4 +55,11 @@ basic.forever(function () {
     DigitalPin.P15,
     PingUnit.Inches
     )
+    basic.clearScreen()
+    if (obstacle_disc < 20) {
+        control.raiseEvent(
+        EventBusSource.MES_DEVICE_INFO_ID,
+        obstacle_disc
+        )
+    }
 })
