@@ -1,6 +1,6 @@
 control.onEvent(EventBusSource.MES_DEVICE_INFO_ID, EventBusValue.MICROBIT_EVT_ANY, function () {
     if (in_motion) {
-        wuKong.mecanumRun(wuKong.RunList.left, 49)
+        wuKong.mecanumSpin(wuKong.TurnList.Left, 50)
         basic.pause(50)
         wuKong.mecanumRun(wuKong.RunList.Front, 49)
     }
@@ -48,6 +48,8 @@ SerialPin.P2,
 SerialPin.P1,
 BaudRate.BaudRate9600
 )
+wuKong.setLightMode(wuKong.LightMode.OFF)
+let strip = neopixel.create(DigitalPin.P12, 4, NeoPixelMode.RGB)
 basic.showIcon(IconNames.Heart)
 basic.forever(function () {
     obstacle_disc = sonar.ping(
@@ -60,5 +62,12 @@ basic.forever(function () {
         EventBusSource.MES_DEVICE_INFO_ID,
         EventBusValue.MICROBIT_EVT_ANY
         )
+    }
+    if (pins.digitalReadPin(DigitalPin.P0) == 1) {
+        wuKong.lightIntensity(100)
+        strip.showRainbow(1, 360)
+    } else {
+        wuKong.lightIntensity(0)
+        strip.showColor(neopixel.colors(NeoPixelColors.Black))
     }
 })
