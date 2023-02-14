@@ -1,6 +1,6 @@
 control.onEvent(EventBusSource.MES_DEVICE_INFO_ID, EventBusValue.MICROBIT_EVT_ANY, function () {
     if (in_motion) {
-        wuKong.mecanumSpin(wuKong.TurnList.Left, 80)
+        wuKong.mecanumRun(wuKong.RunList.left, 49)
         basic.pause(50)
         wuKong.mecanumRun(wuKong.RunList.Front, 49)
     }
