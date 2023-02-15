@@ -9,12 +9,8 @@ input.onButtonPressed(Button.A, function () {
     wuKong.mecanumRun(wuKong.RunList.Front, 49)
     in_motion = 1
 })
-input.onButtonPressed(Button.B, function () {
-    wuKong.mecanumStop()
-    in_motion = 0
-})
-serial.onDataReceived(serial.delimiters(Delimiters.Hash), function () {
-    voice_id = serial.readString()
+radio.onReceivedString(function (receivedString) {
+    voice_id = receivedString
     if (voice_id == "5#") {
         wuKong.mecanumStop()
         in_motion = 0
@@ -32,9 +28,14 @@ serial.onDataReceived(serial.delimiters(Delimiters.Hash), function () {
         in_motion = 1
     }
 })
+input.onButtonPressed(Button.B, function () {
+    wuKong.mecanumStop()
+    in_motion = 0
+})
 let obstacle_disc = 0
 let voice_id = ""
 let in_motion = 0
+radio.setGroup(8)
 wuKong.mecanumWheel(
 wuKong.ServoList.S2,
 wuKong.ServoList.S3,
@@ -43,11 +44,6 @@ wuKong.ServoList.S1
 )
 wuKong.mecanumStop()
 in_motion = 0
-serial.redirect(
-SerialPin.P2,
-SerialPin.P1,
-BaudRate.BaudRate9600
-)
 wuKong.setLightMode(wuKong.LightMode.OFF)
 let strip = neopixel.create(DigitalPin.P12, 4, NeoPixelMode.RGB)
 basic.showIcon(IconNames.Heart)
