@@ -1,7 +1,7 @@
 control.onEvent(EventBusSource.MES_DEVICE_INFO_ID, EventBusValue.MICROBIT_EVT_ANY, function () {
     if (in_motion) {
-        wuKong.mecanumSpin(wuKong.TurnList.Left, 50)
-        basic.pause(50)
+        wuKong.mecanumSpin(wuKong.TurnList.Left, 80)
+        basic.pause(200)
         wuKong.mecanumRun(wuKong.RunList.Front, 49)
     }
 })
@@ -53,7 +53,7 @@ basic.forever(function () {
     DigitalPin.P15,
     PingUnit.Centimeters
     )
-    if (obstacle_disc < 20) {
+    if (obstacle_disc < 25) {
         control.raiseEvent(
         EventBusSource.MES_DEVICE_INFO_ID,
         EventBusValue.MICROBIT_EVT_ANY
